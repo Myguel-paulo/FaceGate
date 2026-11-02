@@ -8,10 +8,13 @@ if imagem is None:
     exit()
 
 #Abrindo a imagem em uma janela
+
+"""
 cv2.namedWindow("Foto", cv2.WINDOW_NORMAL) # Janela redimensionável
 cv2.imshow("Foto", imagem)
 cv2.waitKey(0) #Espera resposta do teclado
 cv2.destroyAllWindows()
+"""
 
 #Salvando copia da imagem
 cv2.imwrite("fotos/copia.jpeg", imagem)
@@ -37,3 +40,21 @@ cv2.putText(imgComRetangulo,"Hello world", (50, 40), cv2.FONT_HERSHEY_SIMPLEX, 0
             (0, 255, 0), 2)
 
 cv2.imwrite("fotos/imgRetanguloComTexto.jpeg", imgComRetangulo)
+
+
+# Captura de vídeo e câmera
+
+camera = cv2.VideoCapture(1)
+
+while True:
+
+    ok, quadro = camera.read()
+    if not ok:
+        break
+
+    cv2.imshow("Camera", quadro)
+    cv2.waitKey(1)
+    if cv2.getWindowProperty("Camera", cv2.WND_PROP_VISIBLE) < 1 : break #tecla q para sair
+
+camera.release()
+cv2.destroyAllWindows()
