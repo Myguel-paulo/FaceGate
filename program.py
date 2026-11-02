@@ -16,7 +16,7 @@ cv2.destroyAllWindows()
 #Salvando copia da imagem
 cv2.imwrite("fotos/copia.jpeg", imagem)
 
-#Deixando a imagem cinzaa
+#Deixando a imagem cinza
 imgCinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
 cv2.imwrite("fotos/imgCinza.jpeg", imgCinza)
 
@@ -27,9 +27,13 @@ cv2.imwrite("fotos/imgSuavizada.jpeg", imgSuavizada)
 
 imgComRetangulo = imagem.copy()
 
-cv2.rectangle(imgComRetangulo, (100, 110), (200, 200), (0, 255,0), 0)
+#Aplicando retângulo na imagem
+cv2.rectangle(imgComRetangulo, (50, 50), (200, 200), (0, 255,0), 2)
+cv2.imwrite("fotos/imgComRetangulo.jpeg", imgComRetangulo)
 
-cv2.namedWindow("Imagem com Retângulo", cv2.WINDOW_NORMAL)
-cv2.imshow("Imagem com Retângulo", imgComRetangulo)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+#Aplicando texto na imagem
+
+cv2.putText(imgComRetangulo,"Hello world", (50, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.9, 
+            (0, 255, 0), 2)
+
+cv2.imwrite("fotos/imgRetanguloComTexto.jpeg", imgComRetangulo)
