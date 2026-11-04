@@ -54,7 +54,7 @@ while True:
 
     cv2.imshow("Camera", quadro)
     cv2.waitKey(1)
-    if cv2.getWindowProperty("Camera", cv2.WND_PROP_VISIBLE) < 1 : break #tecla q para sair
+    if cv2.getWindowProperty("Camera", cv2.WND_PROP_VISIBLE) < 1 : break
 
 camera.release()
 cv2.destroyAllWindows()
