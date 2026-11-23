@@ -6,36 +6,29 @@ detector = cv2.FaceDetectorYN.create(
     (320, 320), 0.8
 )
 
-imagem = cv2.imread("fotos/foto1.jpeg")
+camera = cv2.VideoCapture(1)
 
-if imagem is None:
-    print("Não foi possivel abrir a imagem")
-    exit()
+while True:
+    ok, quadro = camera.read()
+    if not ok:
+        break
 
+    altura, largura = quadro.shape[:2]
+    detector.setInputSize((largura, altura))
+    _,rostos = detector.detect(quadro)
 
-altura, largura = imagem.shape[:2]
-detector.setInputSize((largura,altura))
+    if rostos is not None:
+        for rosto in rostos:
+            x,y,w,h = rosto[:4].astype(int)
+            cv2.rectangle(quadro, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-_,rostos = detector.detect(imagem)
+    quadro = cv2.flip(quadro, 1)
+    cv2.imshow("FaceGate", quadro)
+    cv2.waitKey(1)
+    if cv2.getWindowProperty("FaceGate", cv2.WND_PROP_VISIBLE) < 1:
+        break
 
+camera.release()
+cv2.destroyAllWindows()
 
-if rostos is None:
-    print("Nenhum rosto encontrado")
-else:
-    print("Rostos encontrados:", len(rostos))
-
-    for rosto in rostos:
-
-        x,y,w,h = rosto[:4].astype(int)
-        cv2.rectangle(imagem, (x,y), (x + w, h + y), (0, 255, 0), 4)
-
-def mostrar(nome, img, altura_max=800):
-        altura, largura = img.shape[:2]
-        escala = min(altura_max / altura, 1)
-        menor = cv2.resize(img, (int(largura * escala), int(altura * escala)))
-        cv2.imshow(nome, menor)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
-mostrar("Rostos", imagem)
 
